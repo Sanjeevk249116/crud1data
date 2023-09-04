@@ -68,14 +68,14 @@ const check = (req, res, next) => {
     });
 }
 
-Router.use(check)
+// Router.use(check)
 
-Router.get("/blogs",async(req,res)=>{
+Router.get("/blogs",check,async(req,res)=>{
    const data=await BlogModel.find();
     res.send({data});
 })
 
-Router.post("/blogs/add",async(req,res)=>{
+Router.post("/blogs/add",check,async(req,res)=>{
     const{title,category,author,content}=req.body;
     const checkData=await BlogModel.findOne({title,category,author,content})
     if (checkData) {
@@ -101,7 +101,7 @@ Router.post("/blogs/add",async(req,res)=>{
 })
 
 
-Router.put("/blogs/put/:ID", async (req, res) => {
+Router.put("/blogs/put/:ID",check, async (req, res) => {
     const { title, author, category ,content} = req.body
     const { ID } = req.params;
     const doc = await BlogModel.findOne({ _id: ID, user_id: req.UserId });
@@ -122,7 +122,7 @@ Router.put("/blogs/put/:ID", async (req, res) => {
 })
 
 
-Router.delete("/blogs/delete/:ID", async (req, res) => {
+Router.delete("/blogs/delete/:ID",check, async (req, res) => {
     const { ID } = req.params;
     try {
         const data = await BlogModel.findOneAndDelete({ _id: ID, user_id: req.UserId });
