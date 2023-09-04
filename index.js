@@ -6,7 +6,6 @@ const{connection}=require("./config/connection")
 const{Router}=require("./Router/Router")
 const app=express();
 
-
 app.use(express.json());
 app.use("/",Router)
 
